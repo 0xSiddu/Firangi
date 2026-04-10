@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Secrets Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="background-elements">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <div class="container">
+        <header class="glass-panel">
+            <div class="header-content">
+                <div class="logo-area">
+                    <i class="fa-solid fa-shield-halved fa-2x logo-icon"></i>
+                    <div>
+                        <h1 style="text-transform: capitalize;">firangi</h1>
+                        <p class="subtitle">GitHub Secrets Scanner Results</p>
+                    </div>
+                </div>
+                
+                <div class="controls">
+                    <div class="select-wrapper">
+                        <select id="scan-selector">
+                            <option value="">Loading scans...</option>
+                        </select>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                    <button class="btn btn-secondary" id="live-toggle-btn"><i class="fa-solid fa-tower-broadcast"></i> Live Monitoring</button>
+                    <!-- File upload for manual loading -->
+                    <label class="btn btn-secondary upload-btn">
+                        <i class="fa-solid fa-file-arrow-up"></i> Upload JSON
+                        <input type="file" id="file-upload" accept=".json" style="display: none;">
+                    </label>
+                </div>
+            </div>
+        </header>
+
+        <section id="meta-stats" class="stats-grid" style="display: none;">
+            <div class="stat-card glass-panel">
+                <div class="stat-icon"><i class="fa-brands fa-github"></i></div>
+                <div class="stat-info">
+                    <h3 id="stat-repos">0</h3>
+                    <p id="stat-repos-label" style="font-size: 0.75rem;">Repos Scanned</p>
+                </div>
+            </div>
+            <div class="stat-card glass-panel">
+                <div class="stat-icon"><i class="fa-solid fa-key"></i></div>
+                <div class="stat-info">
+                    <h3 id="stat-secrets">0</h3>
+                    <p>Total Secrets</p>
+                </div>
+            </div>
+            <div class="stat-card glass-panel">
+                <div class="stat-icon"><i class="fa-solid fa-clock"></i></div>
+                <div class="stat-info">
+                    <h3 id="stat-time">0s</h3>
+                    <p>Scan Duration</p>
+                </div>
+            </div>
+            <div class="stat-card glass-panel">
+                <div class="stat-icon"><i class="fa-solid fa-microchip"></i></div>
+                <div class="stat-info">
+                    <h3 id="stat-workers">0 / 0</h3>
+                    <p>Workers (Clone / Scan)</p>
+                </div>
+            </div>
+            <div class="stat-card glass-panel">
+                <div class="stat-icon"><i class="fa-solid fa-calendar-days"></i></div>
+                <div class="stat-info">
+                    <h3 id="stat-date">-</h3>
+                    <p>Scan Date</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="filters glass-panel" id="filters-section" style="display: none;">
+            <div class="search-bar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="search-input" placeholder="Search repos, detectors, files...">
+            </div>
+            <div class="severity-filters">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="CRITICAL"><span class="dot crit"></span> Critical</button>
+                <button class="filter-btn" data-filter="HIGH"><span class="dot high"></span> High</button>
+                <button class="filter-btn" data-filter="MEDIUM"><span class="dot med"></span> Medium</button>
+                <button class="filter-btn" data-filter="LOW"><span class="dot low"></span> Low</button>
+            </div>
+            <div class="verified-filters" style="display: flex; gap: 0.5rem; flex-wrap: wrap; border-left: 1px solid var(--border-color); padding-left: 1rem;">
+                <button class="filter-btn active" data-verified="all">All Status</button>
+                <button class="filter-btn" data-verified="verified"><i class="fa-solid fa-check" style="color: #34d399"></i> Valid</button>
+                <button class="filter-btn" data-verified="unverified"><i class="fa-solid fa-xmark" style="color: #9ca3af"></i> Invalid / Unverified</button>
+            </div>
+        </section>
+
+        <div id="loading" class="loading-state">
+            <div class="spinner"></div>
+            <p>Waiting for data...</p>
+        </div>
+
+        <div id="no-results" class="empty-state" style="display: none;">
+            <i class="fa-regular fa-face-frown-open fa-3x"></i>
+            <h3>No results found</h3>
+            <p>Try adjusting your search or filters.</p>
+        </div>
+
+        <section id="findings-container" class="findings-grid">
+            <!-- Findings will be populated here by JS -->
+        </section>
+    </div>
+
+    <!-- Modal for showing full details -->
+    <div id="detail-modal" class="modal">
+        <div class="modal-content glass-panel">
+            <span class="close-modal">&times;</span>
+            <div class="modal-header">
+                <div id="modal-severity-badge"></div>
+                <h2 id="modal-title">Secret Details</h2>
+            </div>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
