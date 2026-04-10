@@ -252,5 +252,5 @@ which trufflehog  # verify
 ---
 
 <div align="center">
-Made with ❤️ for the bug bounty community
+Made with ❤️ By Siddu Mulkalla
 </div>
