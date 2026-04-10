@@ -48,7 +48,7 @@ curl -sSfL https://raw.githubusercontent.com/trufflesecurity/trufflehog/main/scr
 ### Clone & Setup
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/github-secret-finder.git
+git clone https://github.com/0xSiddu/github-secret-finder.git
 cd github-secret-finder
 
 # No pip dependencies — pure stdlib!
